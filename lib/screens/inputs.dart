@@ -15,3 +15,4 @@ class _InputsState extends State<Inputs> {
     );
   }
 }
+
