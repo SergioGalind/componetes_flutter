@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:practica3/screens/images_screen.dart';
 import 'package:practica3/screens/infinite_list.dart';
 import 'package:practica3/screens/inputs.dart';
 import 'package:practica3/screens/notifications.dart';
@@ -26,8 +27,12 @@ class HomeScreen extends StatelessWidget {
               style: AppTheme.ligthTheme.textTheme.bodySmall,
             ),
             leading:const Icon(Icons.inbox_rounded, color: AppTheme.primaryColor,),
-            trailing:const Icon(Icons.arrow_right_outlined, color: AppTheme.primaryColor,
+            trailing: const CircularProgressIndicator(
+              value: 0.5,
             ),
+            
+           // trailing:const Icon(Icons.arrow_right_outlined, color: AppTheme.primaryColor,),
+        
             onTap: (){
               final ruta1 = MaterialPageRoute(builder: (context){
                 return const Inputs();
@@ -70,6 +75,24 @@ class HomeScreen extends StatelessWidget {
                 return const Notifications();
               });
               Navigator.push(context, ruta3);
+              }
+          ),
+          const Divider(),
+          ListTile(
+            title: Text(
+              'Imágenes',
+              style: AppTheme.ligthTheme.textTheme.headlineLarge,),
+            subtitle: Text(
+              'widgets de manipulacion de Imágenes',
+              style: AppTheme.ligthTheme.textTheme.bodySmall,),
+            leading:const Icon(Icons.image, color: AppTheme.primaryColor,),
+            trailing:const Icon(Icons.arrow_right_outlined, color: AppTheme.primaryColor,
+            ),
+            onTap: (){
+              final ruta4 = MaterialPageRoute(builder: (context){
+                return const ImagesScreen();
+              });
+              Navigator.push(context, ruta4);
               }
           ),
         ],
