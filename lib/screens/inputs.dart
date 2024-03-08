@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:practica3/screens/home_screen.dart';
+import 'package:practica3/screens/images_screen.dart';
+import 'package:practica3/screens/infinite_list.dart';
+import 'package:practica3/screens/notifications.dart';
 import 'package:practica3/theme/app_theme.dart';
 
 class Inputs extends StatefulWidget {
@@ -15,6 +19,7 @@ class _InputsState extends State<Inputs> {
   bool postreCheck1 = false;
   bool postreCheck2 = false;
   bool postreCheck3 = false;
+  int selectedIndex = 0; //Elemento seleccionado de la navigation bar
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,42 +29,77 @@ class _InputsState extends State<Inputs> {
         ),
       ),
       body: ListView(
-        children: [ 
+        children: [
           Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              entradaTexto(),
-              entradaSwitch(),
-              entradaSlider(),
-              entradasRadio(),
-              Text(
-                '¿Qué postres te gustan',
-                style: AppTheme.ligthTheme.textTheme.headlineLarge,
-              ),
-              entradasCheck(),
-              const ElevatedButton(
-                onPressed: null,
-                child: Text(
-                  'DataScreen',
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                entradaTexto(),
+                entradaSwitch(),
+                entradaSlider(),
+                entradasRadio(),
+                Text(
+                  '¿Qué postres te gustan',
+                  style: AppTheme.ligthTheme.textTheme.headlineLarge,
                 ),
-              ),
-            ],
+                entradasCheck(),
+                const ElevatedButton(
+                  onPressed: null,
+                  child: Text(
+                    'DataScreen',
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: selectedIndex,
+        backgroundColor: Colors.white,
+        onTap: (index) => openScreen(context, index),
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            backgroundColor: AppTheme.primaryColor,
+            icon: Icon(
+              Icons.home,
+              color: AppTheme.backColor,
+            ),
             label: 'Inicio',
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.next_plan), label: 'Datos'),
+          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Lista'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.notifications_active), label: 'Notificaciones'),
+          BottomNavigationBarItem(icon: Icon(Icons.image), label: 'Imagenes'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.exit_to_app), label: 'Salir'),
         ],
       ),
     );
+  }
+
+  openScreen(BuildContext context, int index) {
+    MaterialPageRoute ruta =
+        MaterialPageRoute(builder: (context) => const HomeScreen());
+    switch (index) {
+      case 0:
+        ruta = MaterialPageRoute(builder: (context) => const HomeScreen());
+        break;
+      case 1:
+        ruta = MaterialPageRoute(builder: (context) => const InfiniteList());
+        break;
+      case 2:
+        ruta = MaterialPageRoute(builder: (context) => const Notifications());
+        break;
+      case 3:
+        ruta = MaterialPageRoute(builder: (context) => const ImagesScreen());
+        break;
+    }
+    setState(() {
+      selectedIndex = index;
+      Navigator.push(context, ruta);
+    });
   }
 
   TextField entradaTexto() {
@@ -173,36 +213,33 @@ class _InputsState extends State<Inputs> {
             setState(() {
               postreCheck1 = value!;
             });
-          }
+          }),
         ),
-    ),
-    Text(
-      'Chocoflan',
-      style: AppTheme.ligthTheme.textTheme.bodySmall,
-    ),
-    Checkbox(
+        Text(
+          'Chocoflan',
+          style: AppTheme.ligthTheme.textTheme.bodySmall,
+        ),
+        Checkbox(
           value: postreCheck2,
           onChanged: ((value) {
             setState(() {
               postreCheck2 = value!;
             });
-          }
+          }),
         ),
-    ),
-    Text(
-      'pay de limón',
-      style: AppTheme.ligthTheme.textTheme.bodySmall,
-    ),
-    Checkbox(
+        Text(
+          'pay de limón',
+          style: AppTheme.ligthTheme.textTheme.bodySmall,
+        ),
+        Checkbox(
           value: postreCheck2,
           onChanged: ((value) {
             setState(() {
               postreCheck2 = value!;
             });
-          }
+          }),
         ),
-    ),
-    ],
+      ],
     );
   }
 }
