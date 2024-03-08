@@ -11,6 +11,10 @@ class Inputs extends StatefulWidget {
 class _InputsState extends State<Inputs> {
   bool valueSwitch = false;
   double sliderValue = 0.0;
+  int foodRadio = 0;
+  bool postreCheck1 = false;
+  bool postreCheck2 = false;
+  bool postreCheck3 = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,34 +23,42 @@ class _InputsState extends State<Inputs> {
           'Entradas',
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            entradaTexto(),
-            entradaSwitch(),
-            entradaSlider(),
-
-                const ElevatedButton(
-                    onPressed: null,
-                    child: Text(
-                      'DataScreen',
-                    ),
-                    ),
-              ],
+      body: ListView(
+        children: [ 
+          Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              entradaTexto(),
+              entradaSwitch(),
+              entradaSlider(),
+              entradasRadio(),
+              Text(
+                '¿Qué postres te gustan',
+                style: AppTheme.ligthTheme.textTheme.headlineLarge,
+              ),
+              entradasCheck(),
+              const ElevatedButton(
+                onPressed: null,
+                child: Text(
+                  'DataScreen',
+                ),
+              ),
+            ],
+          ),
         ),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home),
-          label: 'Inicio',
-          ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.next_plan),
-            label: 'Datos'),
+            icon: Icon(Icons.home),
+            label: 'Inicio',
+          ),
+          BottomNavigationBarItem(icon: Icon(Icons.next_plan), label: 'Datos'),
         ],
-        ),
+      ),
     );
   }
 
@@ -101,6 +113,96 @@ class _InputsState extends State<Inputs> {
           }),
         )
       ],
+    );
+  }
+
+  Column entradasRadio() {
+    return Column(
+      children: [
+        Text(
+          '¿Qué prefieres?',
+          style: AppTheme.ligthTheme.textTheme.headlineLarge,
+        ),
+        ListTile(
+          title: Text(
+            'Tacos al pastor',
+            style: AppTheme.ligthTheme.textTheme.bodySmall,
+          ),
+          leading: Radio(
+            value: 1,
+            groupValue: foodRadio,
+            onChanged: (value) {
+              setState(() {
+                foodRadio = value!;
+                //print('Comida seleccionada: $foodRadio');
+              });
+            },
+          ),
+        ),
+        ListTile(
+          title: Text(
+            'Chileatole',
+            style: AppTheme.ligthTheme.textTheme.bodySmall,
+          ),
+          leading: Radio(
+            value: 2,
+            groupValue: foodRadio,
+            onChanged: (value) {
+              setState(() {
+                foodRadio = value!;
+                //print('Comida seleccionada: $foodRadio');
+              });
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row entradasCheck() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Text(
+          'Helado de Chocoreta',
+          style: AppTheme.ligthTheme.textTheme.bodySmall,
+        ),
+        Checkbox(
+          value: postreCheck1,
+          onChanged: ((value) {
+            setState(() {
+              postreCheck1 = value!;
+            });
+          }
+        ),
+    ),
+    Text(
+      'Chocoflan',
+      style: AppTheme.ligthTheme.textTheme.bodySmall,
+    ),
+    Checkbox(
+          value: postreCheck2,
+          onChanged: ((value) {
+            setState(() {
+              postreCheck2 = value!;
+            });
+          }
+        ),
+    ),
+    Text(
+      'pay de limón',
+      style: AppTheme.ligthTheme.textTheme.bodySmall,
+    ),
+    Checkbox(
+          value: postreCheck2,
+          onChanged: ((value) {
+            setState(() {
+              postreCheck2 = value!;
+            });
+          }
+        ),
+    ),
+    ],
     );
   }
 }
